@@ -16,9 +16,9 @@ _start:
 	push rdi
 	push rsi
 	push rdx
-	lea rbx, [str1]
-	lea rax, [str2]
-	mov rdx, [count]
+	lea rbx, [str1] ; indirect reference, move string index pointer to destination pointer 
+	lea rax, [str2] ; indirect reference, move string index pointer to source pointer
+	mov rdx, [count] ; store string length
 	mov rdi, rbx
 	mov rsi, rax
 	
@@ -27,16 +27,16 @@ _start:
 	pop rsi
 	pop rdi
 	xor rax, rax
-	mov ax, 60
+	mov ax, 60 ; exit
 	syscall
 	 
 _memcpy:
 	xor rax, rax
 	push rcx
 	mov rcx, rdx
-	cld
-	repne movsb
-	mov byte[rdi], 0
+	cld ; DF, increase destination pointer
+	repne movsb ; byte unit, move source pointer to destination pointer 
+	mov byte[rdi], 0 ; add a tailing zero
 	mov rax, rdi
 	pop rcx
 	ret
